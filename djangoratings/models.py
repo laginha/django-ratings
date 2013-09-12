@@ -5,7 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 # support for custom User models in Django 1.5+
-from djangoratings.compat import user_model_label
+from djangoratings.compat import user_model_label, USERNAME_FIELD
+
 User = user_model_label
 
 try:
@@ -42,7 +43,7 @@ class Vote(models.Model):
 
     def user_display(self):
         if self.user:
-            return "%s (%s)" % (self.user.username, self.ip_address)
+            return "%s (%s)" % (getattr(self.user, USERNAME_FIELD), self.ip_address)
         return self.ip_address
     user_display = property(user_display)
 
