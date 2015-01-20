@@ -10,8 +10,10 @@ user_model_label = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 try:
     from django.contrib.auth import get_user_model
-    USERNAME_FIELD = get_user_model().USERNAME_FIELD
 except ImportError:
     from django.contrib.auth.models import User
     get_user_model = lambda: User
-    USERNAME_FIELD = 'username'
+
+
+def get_username_field():
+    return get_user_model().USERNAME_FIELD
